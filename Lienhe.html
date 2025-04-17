@@ -62,38 +62,127 @@
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-md">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <span class="text-2xl font-bold text-yellow-600">Phương Nam</span>
-                    <span class="ml-2 text-sm text-gray-500">Ẩm thực miền Nam</span>
-                </div>
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="#" class="text-gray-600 hover:text-yellow-600" onclick="showPage('home')">Trang Chủ</a>
-                    <a href="#" class="text-gray-600 hover:text-yellow-600" onclick="showPage('about')">Giới Thiệu</a>
-                    <a href="#" class="text-gray-600 hover:text-yellow-600" onclick="showPage('menu')">Thực Đơn</a>
-                    <a href="#" class="text-gray-600 hover:text-yellow-600" onclick="showPage('reservation')">Đặt Bàn</a>
-                    <a href="#" class="text-gray-600 hover:text-yellow-600" onclick="showPage('contact')">Liên Hệ</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button id="loginBtn" class="bg-transparent text-yellow-600 px-4 py-2 rounded border border-yellow-600 hover:bg-yellow-600 hover:text-white transition">
-                        Đăng Nhập
-                    </button>
-                    <button id="registerBtn" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">
-                        Đăng Ký
-                    </button>
-                    <div class="relative ml-3">
-                        <a href="#" class="text-gray-600 hover:text-yellow-600">
-                            <i class="fas fa-shopping-cart text-xl"></i>
-                            <span class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs" id="cartCount">0</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+      <!-- Header -->
+      <header class="bg-white shadow-md relative z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+          <div class="flex items-center">
+            <span class="text-2xl font-bold text-yellow-600">Phương Nam</span>
+            <span class="ml-2 text-sm text-gray-500">Ẩm thực miền Nam</span>
+          </div>
+    
+          <!-- Nút ba gạch mobile -->
+          <button id="mobileMenuBtn" class="md:hidden flex items-center px-3 py-2 border rounded text-yellow-600 border-yellow-600">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+    
+          <!-- Menu desktop -->
+          <div class="hidden md:flex items-center space-x-4" id="desktopMenu">
+            <a href="index.html" class="text-gray-600 hover:text-yellow-600">Trang Chủ</a>
+            <a href="Gioithieu.html" class="text-gray-600 hover:text-yellow-600">Giới Thiệu</a>
+            <a href="Menu.html" class="text-gray-600 hover:text-yellow-600">Thực Đơn</a>
+            <a href="Datban.html" class="text-gray-600 hover:text-yellow-600">Đặt Bàn</a>
+            <a href="Lienhe.html" class="text-gray-600 hover:text-yellow-600">Liên Hệ</a>
+            <button onclick="openLogin()" class="text-yellow-600 border border-yellow-600 px-4 py-2 rounded hover:bg-yellow-600 hover:text-white transition">Đăng Nhập</button>
+            <button onclick="openRegister()" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Đăng Ký</button>
+          </div>
         </div>
-    </header>
-
+    
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <span class="text-2xl font-bold text-yellow-600">Phương Nam</span>
+              <button id="closeMobileMenu" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+              </button>
+            </div>
+            <nav class="flex flex-col space-y-4">
+              <a href="index.html" class="text-gray-700 hover:text-yellow-600 mobile-nav-link">Trang Chủ</a>
+              <a href="Gioithieu.html" class="text-gray-700 hover:text-yellow-600 mobile-nav-link">Giới Thiệu</a>
+              <a href="Menu.html" class="text-gray-700 hover:text-yellow-600 mobile-nav-link">Thực Đơn</a>
+              <a href="Datban.html" class="text-gray-700 hover:text-yellow-600 mobile-nav-link">Đặt Bàn</a>
+              <a href="Lienhe.html" class="text-gray-700 hover:text-yellow-600 mobile-nav-link">Liên Hệ</a>
+              <button id="mobileLoginBtn" class="mt-4 text-yellow-600 border border-yellow-600 px-4 py-2 rounded hover:bg-yellow-600 hover:text-white transition">Đăng Nhập</button>
+              <button id="mobileRegisterBtn" class="mt-2 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 transition">Đăng Ký</button>
+            </nav>
+          </div>
+        </div>
+    
+        <!-- Overlay -->
+        <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+      </header>
+    
+      <!-- MODALS -->
+      <div id="loginModal" class="hidden fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
+          <h2 class="text-xl font-bold mb-4">Đăng Nhập</h2>
+          <input type="text" placeholder="Tài khoản" class="w-full border px-3 py-2 rounded mb-3" />
+          <input type="password" placeholder="Mật khẩu" class="w-full border px-3 py-2 rounded mb-3" />
+          <button class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 w-full">Đăng Nhập</button>
+          <button onclick="loginModal.classList.add('hidden')" class="mt-4 text-gray-500">Đóng</button>
+        </div>
+      </div>
+    
+      <div id="registerModal" class="hidden fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
+          <h2 class="text-xl font-bold mb-4">Đăng Ký</h2>
+          <input type="text" placeholder="Họ tên" class="w-full border px-3 py-2 rounded mb-3" />
+          <input type="email" placeholder="Email" class="w-full border px-3 py-2 rounded mb-3" />
+          <input type="password" placeholder="Mật khẩu" class="w-full border px-3 py-2 rounded mb-3" />
+          <button class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 w-full">Đăng Ký</button>
+          <button onclick="registerModal.classList.add('hidden')" class="mt-4 text-gray-500">Đóng</button>
+        </div>
+      </div>
+    
+      <!-- JS: đặt cuối cùng -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const mobileMenu = document.getElementById('mobileMenu');
+          const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+          const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
+          const overlay = document.getElementById('mobileOverlay');
+    
+          const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+          const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+    
+          const loginModal = document.getElementById('loginModal');
+          const registerModal = document.getElementById('registerModal');
+    
+          function openMobileMenu() {
+            mobileMenu.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+          }
+    
+          function closeMobileMenu() {
+            mobileMenu.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+          }
+    
+          mobileMenuBtn.addEventListener('click', openMobileMenu);
+          closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
+          overlay.addEventListener('click', closeMobileMenu);
+    
+          document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+          });
+    
+          // Mở modal
+          window.openLogin = () => loginModal.classList.remove('hidden');
+          window.openRegister = () => registerModal.classList.remove('hidden');
+    
+          mobileLoginBtn.addEventListener('click', () => {
+            closeMobileMenu();
+            openLogin();
+          });
+    
+          mobileRegisterBtn.addEventListener('click', () => {
+            closeMobileMenu();
+            openRegister();
+          });
+        });
+      </script>
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
         <!-- Trang Chủ Section -->
